@@ -1,0 +1,125 @@
+id: cloud-janitor-ai-audit
+namespace: hackathon.finops
+description: "AI-powered cloud waste detection using Kestra's built-in AI Agent with Google Gemini"
+
+inputs:
+  - id: gemini_api_key
+    type: SECRET
+    description: "Google Gemini API key for AI analysis"
+
+tasks:
+  # Step 1: Read the AWS billing data
+  - id: read_billing_data
+    type: io.kestra.plugin.fs.http.Download
+    uri: "https://raw.githubusercontent.com/YOUR_REPO/cloud-janitor/main/mock_data/mock-aws-bill.json"
+    
+  # Step 2: AI Agent analyzes the data and generates waste report using Gemini
+  - id: ai_waste_analysis
+    type: io.kestra.plugin.googlevertexai.ChatCompletion
+    projectId: "your-gcp-project-id"
+    location: "us-central1"
+    modelName: "gemini-1.5-pro"
+    apiKey: "{{ inputs.gemini_api_key }}"
+    messages:
+      - role: user
+        content: |
+          You are a FinOps AI Agent specialized in cloud cost optimization.
+          Analyze the following AWS billing data and identify "zombie resources" (unused/wasted resources).
+          
+          For each zombie resource, provide:
+          1. Resource ID and name
+          2. Resource type (EC2, RDS, S3, EBS, etc.)
+          3. Monthly cost
+          4. Specific reason why it's considered waste (e.g., "CPU < 5% for 30+ days")
+          5. Recommended action
+          
+          AWS Billing Data:
+          {{ read(outputs.read_billing_data.uri) }}
+          
+          Generate a JSON report with this exact structure:
+          {
+            "audit_id": "audit-YYYYMMDD-HHMMSS",
+            "generated_at": "ISO timestamp",
+            "summary": {
+              "total_resources_scanned": number,
+              "zombie_resource_count": number,
+              "total_monthly_savings": number,
+              "total_annual_savings": number,
+              "status": "ACTION_REQUIRED"
+            },
+            "zombies": [
+              {
+                "resource_id": "string",
+                "name": "string",
+                "type": "string",
+                "region": "string",
+                "monthly_cost": number,
+                "reason": "string"
+              }
+            ],
+            "recommendations": [
+              "AI-generated optimization suggestion 1",
+              "AI-generated optimization suggestion 2"
+            ]
+          }
+          
+          Output ONLY the JSON, no additional text.
+    
+  # Step 3: Save AI-generated report
+  - id: save_waste_report
+    type: io.kestra.plugin.core.storage.LocalFiles
+    inputs:
+      waste-report.json: "{{ outputs.ai_waste_analysis.choices[0].message.content }}"
+    outputs:
+      - "*.json"
+  
+  # Step 4: AI generates Terraform destroy code using Gemini
+  - id: ai_terraform_generation
+    type: io.kestra.plugin.googlevertexai.ChatCompletion
+    projectId: "your-gcp-project-id"
+    location: "us-central1"
+    modelName: "gemini-1.5-pro"
+    apiKey: "{{ inputs.gemini_api_key }}"
+    messages:
+      - role: user
+        content: |
+          You are a Terraform code generation expert.
+          
+          Based on this AI-generated waste analysis:
+          {{ outputs.ai_waste_analysis.choices[0].message.content }}
+          
+          Generate a complete Terraform configuration file that:
+          1. Declares the AWS provider (version ~> 5.0)
+          2. Creates resource blocks to safely terminate each zombie resource
+          3. Includes detailed comments with resource details and costs
+          4. Calculates total monthly and annual savings in header comments
+          5. Includes usage instructions
+          
+          For EC2 instances, use: aws_ec2_instance_state with state = "terminated"
+          For other resources, include manual deletion instructions in comments.
+          
+          Output ONLY the Terraform HCL code, no additional text.
+  
+  # Step 5: Save generated Terraform code
+  - id: save_terraform_code
+    type: io.kestra.plugin.core.storage.LocalFiles
+    inputs:
+      destroy_zombies.tf: "{{ outputs.ai_terraform_generation.choices[0].message.content }}"
+    outputs:
+      - "*.tf"
+  
+  # Step 6: Copy files to dashboard data directory
+  - id: copy_to_dashboard
+    type: io.kestra.plugin.scripts.shell.Commands
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    commands:
+      - cp {{ outputs.save_waste_report.uris['waste-report.json'] }} /app/dashboard/src/data/waste-report.json
+      - cp {{ outputs.save_terraform_code.uris['destroy_zombies.tf'] }} /app/terraform/destroy_zombies.tf
+      - echo "✅ AI-generated files copied to dashboard and terraform directories"
+
+triggers:
+  - id: daily_ai_audit
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 9 * * *"
+    description: "Run AI-powered waste audit every morning at 9 AM using Google Gemini"

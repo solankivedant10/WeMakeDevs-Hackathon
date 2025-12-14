@@ -1,0 +1,13 @@
+id: cloud-janitor-audit
+namespace: hackathon.finops
+tasks:
+  - id: analyze
+    type: io.kestra.plugin.scripts.shell.Commands
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    commands:
+      - python3 /app/scripts/waste_detector.py
+triggers:
+  - id: daily
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 9 * * *"

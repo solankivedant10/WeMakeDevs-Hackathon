@@ -1,0 +1,11 @@
+version: "3"
+services:
+  kestra:
+    image: kestra/kestra:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./kestra/flows:/app/flows
+      - ./kestra/scripts:/app/scripts    # <--- ADD THIS LINE
+      - ./mock_data:/app/mock_data
+    command: server local
