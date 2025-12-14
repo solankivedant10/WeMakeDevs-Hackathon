@@ -301,7 +301,7 @@ resource "aws_ec2_instance_state" "terminate_${z.resource_id.replace(/-/g, '_')}
 
         {/* Footer */}
         <footer className="mt-16 text-center text-sm text-slate-600 font-mono pb-8">
-          <p suppressHydrationWarning>
+          <p suppressHydrationWarning className="text-gray-500 text-sm">
             Generated at: {new Date(wasteReport.generated_at).toLocaleString()}
           </p>
         </footer>
