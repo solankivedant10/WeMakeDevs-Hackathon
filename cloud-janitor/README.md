@@ -1,188 +1,235 @@
-This `README.md` is your sales pitch. Judges might not run your code, but they **will** read this page. It needs to look like a legitimate open-source tool, not just a weekend script.
+🧹 Cloud Janitor — The Autonomous FinOps Agent
 
-I have structured this to explicitly highlight every Sponsor Tool you used, maximizing your chances for the **Infinity Build ($5k)**, **Wakanda Data ($4k)**, and **Deployment ($2k)** awards.
+An AI-powered FinOps platform that detects wasted cloud resources, explains why they matter, and generates safe Infrastructure-as-Code to eliminate them — with humans firmly in control.
 
------
+🌐 Live Demo
 
-### 📝 The "Cloud Janitor" README
+[https://cloud-janitor-finops.vercel.app](https://cloud-janitor-finops.vercel.app)
 
-**Copy and paste the code block below into your `README.md` file.**
+![Built With Cline](https://img.shields.io/badge/Built%20With-Cline-purple?style=for-the-badge)
+![Orchestrated By Kestra](https://img.shields.io/badge/Orchestrated%20By-Kestra-f01693?style=for-the-badge)
+![Powered By Gemini](https://img.shields.io/badge/AI-Google%20Gemini-4285F4?style=for-the-badge)
+![Deployed On Vercel](https://img.shields.io/badge/Deployed%20On-Vercel-black?style=for-the-badge)
+![Secured By CodeRabbit](https://img.shields.io/badge/Safety-CodeRabbit-orange?style=for-the-badge)
 
-````markdown
-# 🧹 The Cloud Janitor
+🚨 The Problem
 
-> **The Autonomous FinOps Agent that finds wasted cloud resources and writes the code to kill them.**
+Cloud waste is a $30B+ global problem.
 
-[![Built With Cline](https://img.shields.io/badge/Agent-Cline-purple?style=for-the-badge)](https://github.com/cline/cline)
-[![Orchestrated By Kestra](https://img.shields.io/badge/Orchestrated%20By-Kestra-f01693?style=for-the-badge)](https://kestra.io)
-[![Deployed On Vercel](https://img.shields.io/badge/Deployed%20On-Vercel-black?style=for-the-badge)](https://vercel.com)
-[![Secured By CodeRabbit](https://img.shields.io/badge/Safety-CodeRabbit-orange?style=for-the-badge)](https://coderabbit.ai)
+Teams routinely forget:
+Development servers running 24/7
+Unattached storage volumes
+Old snapshots kept indefinitely
+Idle RDS databases and test environments
+Manual audits are slow. Writing cleanup scripts is risky.
+The result is silent, compounding cost leakage.
 
----
+💡 The Solution
 
-## 🚨 The Problem
-Cloud waste is a **$30 Billion** problem. Engineers forget to turn off dev servers, unattached storage volumes, and old snapshots. 
-* **Manual auditing is boring.**
-* **Writing cleanup scripts is risky.**
-* **Result:** Companies bleed money silently.
+Cloud Janitor is a safety-first FinOps automation loop.
+It is intentionally read-only by default and only proposes changes until a human explicitly approves them.
 
-## 💡 The Solution
-**Cloud Janitor** is an autonomous agent loop that actively manages your infrastructure cost:
-1.  **Detects** zombies (unused resources) automatically every morning.
-2.  **Calculates** precise monthly savings.
-3.  **Generates** the Terraform Infrastructure-as-Code (IaC) to safely destroy them.
-4.  **Verifies** the code with AI safety checks before human approval.
+The system:
 
----
+1. Detects zombie cloud resources on a daily schedule
+2. Explains why each resource is wasteful using AI-generated insights
+3. Calculates exact monthly and annual savings
+4. Generates Terraform Infrastructure-as-Code for cleanup
+5. Requires human approval and safety confirmation before destruction
 
-## 🏗️ Architecture
+This shifts FinOps from spreadsheets and alerts to explainable, reviewable automation.
+
+🏆 Sponsor Integrations
+
+Cloud Janitor integrates four sponsor tools as first-class system components.
+
+| Sponsor            | Role                   | Usage                                                                                                                                                            |
+| ------------------ | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Kestra + Gemini AI | AI Orchestration       | Kestra runs daily FinOps workflows. Its AI Agent, powered by Gemini 1.5 Pro, analyzes billing data, identifies waste patterns, and produces structured insights. |
+| Cline              | Autonomous Development | Cline designed the system architecture, authored workflows, built the dashboard, generated Terraform, and integrated all components across multiple languages.   |
+| CodeRabbit         | AI Code Review         | All generated Terraform is reviewed for safety. The dashboard simulates a CodeRabbit approval step before any deployment.                                        |
+| Vercel             | Deployment Platform    | Hosts the Next.js dashboard with automatic CI/CD, global CDN, and instant previews.                                                                              |
+
+✨ Key Features
+
+AI-Powered Waste Detection
+Gemini-based analysis of billing and usage patterns
+Natural language explanations for each zombie resource
+Daily scheduled audits via Kestra
+Structured JSON reports with savings breakdowns
+![alt text](kestra-execution-proof.png) 
+![alt text](kestra-proof.png) 
+![alt text](coderabbit-proof.png)
+
+✨ Autonomous Code Generation
+
+Terraform IaC generated for detected waste
+Precise targeting of EC2, EBS, RDS, S3, and snapshots
+Inline safety documentation in generated code
+No automatic execution — code is proposed, not applied
+
+✨ Safety guarantees:
+
+Destruction disabled by default
+Double confirmation required
+No accidental terraform apply
+Human-in-the-loop enforced
+
+✨ Dashboard Experience
+
+A production-ready Next.js interface featuring:
+Dark-mode glassmorphism UI
+Interactive charts using Recharts
+Smooth animations with Framer Motion
+Responsive layout for all devices
+Real-time savings calculations
+Approval-based cleanup workflow
+Simulated CodeRabbit safety checks
+
+✨ Analytics & Insights
+
+Before and after cost comparison
+Savings by resource type
+Zombie vs healthy resource ratios
+Annualized cost impact projections
+
+🏗️ Architecture
 
 ```mermaid
 graph TD
-    A[Kestra Scheduler] -->|Triggers Daily Audit| B(Python Analysis Agent)
-    B -->|Scans Cloud State| C{Waste Found?}
-    C -->|Yes| D[Generate Waste Report JSON]
-    D -->|Feeds Data| E[Cline Autonomous Agent]
-    E -->|Writes Fix| F[Terraform Destroy Script]
-    F -->|Review Request| G[Vercel Dashboard]
-    G -->|Trigger Check| H[CodeRabbit AI Simulation]
-    H -->|Safety Pass| I[Human Approval]
-    I -->|Execute| J[Resources Terminated 💸]
-````
+    A[Kestra Scheduler] -->|Daily| B[Gemini AI Agent]
+    B -->|Analyze Billing| C{Waste Found?}
+    C -->|Yes| D[Waste Report]
+    D -->|JSON| E[Next.js Dashboard]
+    E -->|User Approval| F[Safety Review]
+    F -->|Pass| G[Terraform Plan]
+    G -->|Manual Apply| H[Resource Cleanup]
+```
 
------
+✨ Data Flow:
 
-## 🛠️ Tech Stack & Sponsor Integration
+1. Kestra triggers a scheduled audit
+2. Gemini AI analyzes billing data (mocked in demo)
+3. Waste reports are generated with savings estimates
+4. Dashboard visualizes findings
+5. User reviews and approves actions
+6. Terraform code is generated but not auto-applied
 
-| Tool | Role in Architecture | Award Category |
-| :--- | :--- | :--- |
-| **🤖 Cline** | **The Engineer.** Reads the waste report and *autonomously writes* the Terraform code to fix it. | *Infinity Build Award* |
-| **⚡ Kestra + 🧠 Gemini AI** | **The Brain.** Orchestrates the daily audit workflow using Kestra's built-in AI Agent powered by Google Gemini to analyze billing data and generate insights. | *Wakanda Data Award* |
-| **🛡️ CodeRabbit** | **The Safety Net.** Simulates a security review of the generated Terraform code to prevent accidental deletions. | *Captain Code Award* |
-| **▲ Vercel** | **The Interface.** Hosts the Next.js dashboard, providing a fast, real-time view of savings and pending actions. | *Stormbreaker Deployment* |
+🚀 Installation
 
------
+✨ prerequisites
 
-## 📸 Key Features
+Docker (Kestra)
+Node.js 18+
+npm or yarn
 
-### 1\. AI-Powered Waste Detection (Kestra + Gemini)
+Clone the Repository
 
-Every morning at 9 AM, Kestra's built-in AI Agent (powered by Google Gemini) analyzes your cloud infrastructure:
-- **AI Analysis:** Gemini examines billing data to identify waste patterns
-- **Smart Insights:** AI generates natural language explanations for each zombie resource
-- **Automated Reporting:** Creates structured JSON reports with savings calculations
+```bash
+git clone https://github.com/yourusername/cloud-janitor.git
+cd cloud-janitor
+```
 
-*(See `kestra/flows/cloud-janitor-ai-audit.yml`)*
-
-### 2\. Autonomous Remediation (Cline)
-
-Instead of just alerting you, Cloud Janitor uses **Cline** to write the actual `.tf` file needed to solve the problem.
-
-  * **Input:** "5 Zombie Instances found."
-  * **Cline Output:** A valid `terraform destroy` configuration targeting only those IDs.
-
-### 3\. Safety-First Dashboard (Vercel + CodeRabbit)
-
-We don't let AI delete production servers blindly.
-
-  * **Human-in-the-loop:** You must click "Approve".
-  * **AI Audit:** The "Deploy" button is locked until the **CodeRabbit Safety Check** passes.
-
------
-
-## 🤖 Why This Qualifies for Infinity Build Award
-
-**The Challenge:** Build complete, working automation tools using Cline.
-
-**Our Solution:** Cloud Janitor IS the automation tool, and it was built entirely through Cline's autonomous agent capabilities.
-
-### How Cline Built This Project
-
-1. **Architecture Design**
-   - Cline analyzed the FinOps problem space
-   - Designed the multi-component architecture (Kestra + Next.js + Terraform)
-   - Proposed the AI-driven workflow with Gemini integration
-
-2. **Code Generation**
-   - **Kestra Workflows:** Cline wrote the YAML orchestration files with AI Agent integration
-   - **Next.js Dashboard:** Cline scaffolded and built the entire React application with shadcn/ui
-   - **Terraform Scripts:** Cline generated infrastructure-as-code for resource cleanup
-   - **Data Pipeline:** Cline created the complete data flow from Kestra to Dashboard
-
-3. **Integration & Testing**
-   - Cline connected all components seamlessly
-   - Implemented the data flow from Kestra → Gemini AI → Dashboard → Terraform
-   - Added safety checks and human-in-the-loop approval workflows
-   - Integrated CodeRabbit for security validation
-
-### The Automation Tool We Built
-
-Cloud Janitor automates the entire FinOps workflow:
-- ✅ **Automated Detection:** Kestra schedules daily audits at 9 AM
-- ✅ **Automated Analysis:** Gemini AI identifies waste patterns and generates insights
-- ✅ **Automated Remediation:** Terraform code is auto-generated by AI
-- ✅ **Automated Safety:** CodeRabbit reviews before execution
-- ✅ **Automated Deployment:** Vercel handles CI/CD automatically
-
-**Result:** A production-ready tool that saves engineering teams hours of manual cloud cost analysis every week.
-
-### Cline's Role
-
-Cline wasn't just a code assistant - it was the **autonomous engineer** that:
-- Made architectural decisions across multiple platforms
-- Wrote production-quality code in 4 different languages (YAML, TypeScript, Python, HCL)
-- Integrated 5 different platforms (Kestra, Gemini AI, Vercel, CodeRabbit, Terraform)
-- Created a cohesive, working automation system from scratch
-- Implemented modern UI patterns (glassmorphism, animations, responsive design)
-
-**This is the definition of "complete, working automation tools built through CLI."**
-
------
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-  * Docker (for Kestra)
-  * Node.js 18+ (for Dashboard)
-  * Python 3.10+
-
-### 1\. Start the Orchestrator
+Start Kestra
 
 ```bash
 docker-compose up -d
-# Kestra UI will be available at http://localhost:8080
 ```
 
-### 2\. Run the Dashboard
+Kestra UI: [http://localhost:8080](http://localhost:8080)
+
+Run the Dashboard
 
 ```bash
 cd dashboard
 npm install
-npm run ingest  # Loads the latest waste data
 npm run dev
-# Dashboard at http://localhost:3000
 ```
 
------
+Dashboard: [http://localhost:3000](http://localhost:3000)
 
-## 🔮 Future Roadmap
-
-  * **Real AWS Integration:** Replace the mock JSON with `boto3` calls to real AWS accounts.
-  * **Multi-Cloud Support:** Add adapters for Azure and GCP.
-  * **Slack Notifications:** Use Kestra's Slack plugin to ping the DevOps team when savings are found.
-
------
-
-*Built with ❤️ for AssembleHack'25*
+📁 Project Structure
 
 ```
-
-### 🖼️ One Last Thing: Screenshots
-Don't forget to **add your screenshots** (the ones you showed me) into the repository.
-1.  Create a folder `docs/screenshots`.
-2.  Save your images there (e.g., `dashboard.png`, `kestra-flow.png`, `cline-code.png`).
-3.  In the README above, you can insert them like this: `![Dashboard Screenshot](docs/screenshots/dashboard.png)`.
-
-**You are now fully prepared to submit. Good luck! 🚀**
+cloud-janitor/
+├── dashboard/        # Next.js 14 App Router
+├── kestra/           # Workflow orchestration
+├── terraform/        # Generated IaC with safety locks
+├── mock_data/        # Simulated billing data
+└── docker-compose.yml
 ```
+
+---
+
+🎯 Usage
+
+Run an Audit
+
+Open Kestra UI
+Execute cloud-janitor-ai-audit
+Review generated waste report
+
+Review Findings
+
+Open the dashboard
+Inspect zombie resources
+Analyze projected savings
+
+Approve Cleanup
+
+Approve deletion in UI
+Pass CodeRabbit safety simulation
+Review Terraform plan
+Apply manually if desired
+
+🌍 Impact
+
+Demo scenario:
+
+Monthly bill: $12,500
+Zombies detected: 5
+Monthly savings: $626.84
+Annual savings: $7,522
+
+Enterprise scale:
+
+$1M/month cloud spend
+5 percent waste reduction
+$600,000 saved annually
+
+🚫 Non-Goals (By Design)
+
+Cloud Janitor does not:
+
+Auto-apply destructive changes
+Manage IAM permissions
+Access real cloud accounts in demo mode
+Bypass human approval
+
+Safety and explainability take priority over full autonomy.
+
+🛡️ Security & Safety
+
+No hardcoded secrets
+Environment-variable based configuration
+Terraform safety locks
+Human-in-the-loop enforcement
+Audit logs via Kestra
+Mock data only in demo
+
+🏆 Why This Wins
+
+Cloud Janitor demonstrates that autonomous agents can operate across the full infrastructure lifecycle without removing human control.
+
+It combines AI reasoning, orchestration, infrastructure-as-code, and safety validation into a single, coherent system.
+
+This is not AI deleting resources.
+It is AI doing the thinking so humans can make better decisions.
+
+📄 License
+
+MIT License
+
+🙏 Acknowledgments
+
+Built for AssembleHack’25 using Cline, Kestra, Google Gemini, CodeRabbit, and Vercel.
