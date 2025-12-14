@@ -1,17 +1,7 @@
-This `README.md` is your sales pitch. Judges might not run your code, but they **will** read this page. It needs to look like a legitimate open-source tool, not just a weekend script.
+🌐 Live Demo
+> Try the Agent here: [https://cloud-janitor-finops.vercel.app](https://cloud-janitor-finops.vercel.app)
 
-I have structured this to explicitly highlight every Sponsor Tool you used, maximizing your chances for the **Infinity Build ($5k)**, **Wakanda Data ($4k)**, and **Deployment ($2k)** awards.
-
------
-
-### 📝 The "Cloud Janitor" README
-
-**Copy and paste the code block below into your `README.md` file.**
-
-````markdown
-# 🧹 The Cloud Janitor
-
-> **The Autonomous FinOps Agent that finds wasted cloud resources and writes the code to kill them.**
+The Autonomous FinOps Agent that finds wasted cloud resources and writes the code to kill them.
 
 [![Built With Cline](https://img.shields.io/badge/Agent-Cline-purple?style=for-the-badge)](https://github.com/cline/cline)
 [![Orchestrated By Kestra](https://img.shields.io/badge/Orchestrated%20By-Kestra-f01693?style=for-the-badge)](https://kestra.io)
@@ -20,44 +10,26 @@ I have structured this to explicitly highlight every Sponsor Tool you used, maxi
 
 ---
 
-## 🚨 The Problem
-Cloud waste is a **$30 Billion** problem. Engineers forget to turn off dev servers, unattached storage volumes, and old snapshots. 
-* **Manual auditing is boring.**
-* **Writing cleanup scripts is risky.**
-* **Result:** Companies bleed money silently.
+🚨 The Problem
+Cloud waste is a $30 Billion problem. Engineers forget to turn off dev servers, unattached storage volumes, and old snapshots. 
+Manual auditing is boring.
+Writing cleanup scripts is risky.
+Result: Companies bleed money silently.
 
-## 💡 The Solution
-**Cloud Janitor** is an autonomous agent loop that actively manages your infrastructure cost:
-1.  **Detects** zombies (unused resources) automatically every morning.
-2.  **Calculates** precise monthly savings.
-3.  **Generates** the Terraform Infrastructure-as-Code (IaC) to safely destroy them.
-4.  **Verifies** the code with AI safety checks before human approval.
+💡 The Solution
+Cloud Janitor is an autonomous agent loop that actively manages your infrastructure cost:
+1. Detects zombies (unused resources) automatically every morning.
+2. Calculates precise monthly savings.
+3. Generates the Terraform Infrastructure-as-Code (IaC) to safely destroy them.
+4. Verifies the code with AI safety checks before human approval.
 
----
 
-## 🏗️ Architecture
-
-```mermaid
-graph TD
-    A[Kestra Scheduler] -->|Triggers Daily Audit| B(Python Analysis Agent)
-    B -->|Scans Cloud State| C{Waste Found?}
-    C -->|Yes| D[Generate Waste Report JSON]
-    D -->|Feeds Data| E[Cline Autonomous Agent]
-    E -->|Writes Fix| F[Terraform Destroy Script]
-    F -->|Review Request| G[Vercel Dashboard]
-    G -->|Trigger Check| H[CodeRabbit AI Simulation]
-    H -->|Safety Pass| I[Human Approval]
-    I -->|Execute| J[Resources Terminated 💸]
-````
-
------
-
-## 🛠️ Tech Stack & Sponsor Integration
+🛠️ Tech Stack & Sponsor Integration
 
 | Tool | Role in Architecture | Award Category |
 | :--- | :--- | :--- |
-| **🤖 Cline** | **The Engineer.** Reads the waste report and *autonomously writes* the Terraform code to fix it. | *Infinity Build Award* |
-| **⚡ Kestra + 🧠 Gemini AI** | **The Brain.** Orchestrates the daily audit workflow using Kestra's built-in AI Agent powered by Google Gemini to analyze billing data and generate insights. | *Wakanda Data Award* |
+| **🤖 Cline** | **The Engineer.** Reads the waste report and autonomously writes the Terraform code to fix it. | Infinity Build Award |
+| **⚡ Kestra + 🧠 Gemini AI** | **The Brain.** Orchestrates the daily audit workflow using Kestra's built-in AI Agent powered by Google Gemini to analyze billing data and generate insights. | Wakanda Data Award |
 | **🛡️ CodeRabbit** | **The Safety Net.** Simulates a security review of the generated Terraform code to prevent accidental deletions. | *Captain Code Award* |
 | **▲ Vercel** | **The Interface.** Hosts the Next.js dashboard, providing a fast, real-time view of savings and pending actions. | *Stormbreaker Deployment* |
 
